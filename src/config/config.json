@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "vinicius",
+    "password": "cidade01",
+    "database": "projectsv",
+    "host": "localhost",
+    "port": 5433,
+    "dialect": "postgres"
+  }
+}
