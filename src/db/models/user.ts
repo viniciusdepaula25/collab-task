@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize'
-import { sequelize } from 'src/db/database'
+import { Model, DataTypes } from 'sequelize';
+import { sequelize } from 'src/db/database';
 
 export class User extends Model {}
 
@@ -31,4 +31,4 @@ User.init(
     timestamps: true,
     paranoid: true,
   },
-)
+);
