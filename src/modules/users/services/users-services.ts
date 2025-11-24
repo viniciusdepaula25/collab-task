@@ -1,5 +1,5 @@
-import bcrypt from 'bcrypt'
-import {User} from 'src/db/models/user'
+import bcrypt from 'bcrypt';
+import {User} from 'src/db/models/user.model';
 
 type createData = {
     name: string,
@@ -9,28 +9,28 @@ type createData = {
 
 export class UserServices {
 
-    static async create({name, email, password}: createData) {
-        if(!name) throw new Error('É necessario informar o nome.')
-        if(!email) throw new Error('É necessario informar o email.')
-        if(!password) throw new Error('É necessario infomar a senha.')
+  static async create({name, email, password}: createData) {
+    if(!name) throw new Error('É necessario informar o nome.');
+    if(!email) throw new Error('É necessario informar o email.');
+    if(!password) throw new Error('É necessario infomar a senha.');
 
-        const findUser = await User.findOne({
-            where: {
-                email
-            }
-        }) 
-        if(findUser) throw new Error('Email já cadastrado.')
+    const findUser = await User.findOne({
+      where: {
+        email
+      }
+    });
+    if(findUser) throw new Error('Email já cadastrado.');
 
-        const passwordHash = await bcrypt.hash(password, 8)
+    const passwordHash = await bcrypt.hash(password, 8);
 
-        const user = await User.create({
-            name,
-            email,
-            password: passwordHash
-        })
-        return {
-            name,
-            email
-        }
-    }
+    await User.create({
+      name,
+      email,
+      password: passwordHash
+    });
+    return {
+      name,
+      email
+    };
+  }
 }

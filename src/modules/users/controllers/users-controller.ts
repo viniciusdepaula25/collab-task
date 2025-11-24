@@ -1,13 +1,13 @@
-import {Request, Response} from 'express'
+import {Request, Response} from 'express';
 
-import { UserServices } from '../services/users-services'
+import { UserServices } from '../services/users-services';
 
 export class UserController {
-    static async create(req: Request, res: Response) {
-        const {name, email, password} = req.body
+  static async create(req: Request, res: Response) {
+    const {name, email, password} = req.body;
 
-        const output = await UserServices.create({name, email, password})
+    const output = await UserServices.create({name, email, password});
 
-        res.status(201).send(output)
-    }
+    res.status(201).send(output);
+  }
 }
