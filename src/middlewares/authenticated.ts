@@ -17,7 +17,7 @@ export async function authorized(
 
     const {id} = decodeToken as {id: number};
 
-    req.users = {id};
+    req.user = {id};
 
     next();
   }catch (err) {
