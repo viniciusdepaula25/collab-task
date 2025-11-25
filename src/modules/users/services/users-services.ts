@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt';
 import {User} from 'src/db/models/user.model';
+import AppError from 'src/error/app-error';
+import jwt from 'jsonwebtoken';
+import { env } from 'src/env';
 
 type createData = {
     name: string,
@@ -31,6 +34,44 @@ export class UserServices {
     return {
       name,
       email
+    };
+  }
+
+  static async login(email: string, password: string) {
+    const user = await User.findOne({
+      where: {
+        email
+      }
+    });
+
+    if(!user) throw new AppError('Email ou senha invalido.');
+
+    const passwordMatch = await bcrypt.compare(
+      password,
+      user.getDataValue('password')
+    );
+
+    if(!passwordMatch) throw new AppError('Email ou senha invalido.');
+
+    const token = jwt.sign(
+      {
+        id: user.getDataValue('id'),
+      },
+      env.JWT_SECRET,
+      {
+        expiresIn: '1d',
+      },
+    );
+
+    const data = user.dataValues;
+
+    return {
+      token,
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email
+      }
     };
   }
 }

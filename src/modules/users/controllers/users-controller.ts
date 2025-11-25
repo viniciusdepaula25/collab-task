@@ -10,4 +10,12 @@ export class UserController {
 
     res.status(201).send(output);
   }
+
+  static async login(req: Request, res: Response) {
+    const {email, password} = req.body;
+
+    const output = await UserServices.login(email, password);
+
+    res.status(200).send(output);
+  }
 }
