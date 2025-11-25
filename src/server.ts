@@ -2,11 +2,13 @@ import express from 'express';
 import {env} from './env';
 import {routes} from './routes';
 import { sequelize } from './db/database';
+import errorHandler from './middlewares/error-handler';
 
 const app = express();
 
 app.use(express.json());
 app.use(routes);
+app.use(errorHandler);
 
 async function startServer() {
   try {
